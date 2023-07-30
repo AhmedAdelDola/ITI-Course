@@ -15,9 +15,6 @@ final Dio dio = Dio();
     data.forEach((element) {
       TodoMdel user = TodoMdel.fromJson(element);
       users.add(user);
-  return users ;
    });
-
-
    return users ;
       }
