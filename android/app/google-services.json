@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "234212189980",
+    "project_id": "iti-cours",
+    "storage_bucket": "iti-cours.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234212189980:android:09120147004af095977cd9",
+        "android_client_info": {
+          "package_name": "com.example.untitled"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234212189980-ug2hskseo9acr6002m05f998gs10430s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr4xurf67i7LaKX41fkLOcn_uAkXxY6Tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234212189980-ug2hskseo9acr6002m05f998gs10430s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "234212189980-el2tm2uiso0e5jeae5fhk7h10rhjqgai.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.untitled"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

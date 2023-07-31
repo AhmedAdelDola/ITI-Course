@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:untitled/Shared/Network/local/Cache%20helper.dart';
-import 'package:untitled/modules/rejster/rejster.dart';
+import 'package:untitled/modules/login%20screen/login.dart';
 
 import '../../Shared/Cubit/Appcubit.dart';
 import '../../Shared/Cubit/state.dart';
-import '../next screen/Next.dart';
 
-class login extends StatelessWidget {
-  const login({Key? key}) : super(key: key);
+class signUp extends StatelessWidget {
+  const signUp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController email = TextEditingController();
-    TextEditingController pass = TextEditingController();
+    var pass = TextEditingController();
+    var email = TextEditingController();
     var formkey = GlobalKey<FormState>();
+
     return   BlocConsumer<AppCubit,Appstate>(
-        listener: (context, state) {},
-    builder: (context, state) {
-    var cubit = AppCubit().get(context) ;
-          return  Scaffold(
+      listener: (context, state) {},
+        builder: (context, state) {
+          var cubit = AppCubit().get(context) ;
+          return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: Colors.white,
@@ -37,6 +36,16 @@ class login extends StatelessWidget {
                         SizedBox(height: 20,),
                         TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'invalid name';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(label: Text('name')),),
+                        SizedBox(height: 20,),
+                        TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: email,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -51,7 +60,7 @@ class login extends StatelessWidget {
                           controller: pass,
                           validator: (value)  {
                             if (value == null || value.length < 8 ) {
-                              return 'invalid email';
+                              return 'invalid password';
                             }
                             return null;
                           },
@@ -63,33 +72,14 @@ class login extends StatelessWidget {
                             ),
                             onPressed: (){
                               if(formkey.currentState!.validate()){
-                                cubit.FirebaseSignin(email.text, pass.text);
-                                if(cubit.auth == true){
-                                  Cachhelper.putStting(key: 'email', value: email.text);
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => next(),));
+                                cubit.firebaseSignUp(email.text, pass.text);
+                                if(cubit.sucess == true){
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => login(),));
                                 }else{
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Sign in faild'),));
-                                }
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Sign Up faild'),));
                               }
-                            }, child: Text('Log in')),
-                        SizedBox(height: 40,),
-                        Row(
-                          children: [
-                            Text('Forget password? No yawa.'),
-                            Text('Tap me',style: TextStyle(color: Colors.blue)),
-                          ],
-                        ),
-                        SizedBox(height: 70,),
-                        ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(Colors.grey),
-                                fixedSize: MaterialStatePropertyAll(Size(double.maxFinite, 50))
-                            ),
-                            onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => signUp(),));
-                            }, child: Text('No Account? Sign Up')),
-
+                            }}, child: Text('Sign Up')),
                       ],
                     ),
                   ),
@@ -97,7 +87,7 @@ class login extends StatelessWidget {
               ],
             ),
           );
-
-});
+        },
+        );
   }
 }
