@@ -31,15 +31,18 @@ class AppCubit extends Cubit<Appstate> {
   }
   bool? auth ;
   Future<bool> FirebaseSignin(String email , String password) async {
+    emit(loginloadingState());
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
           password: password
       );
       if(credential.user != null){
+        emit(loginsucessState());
       return auth = true ;
       }
     } on FirebaseAuthException catch (e) {
+      emit(loginerrorState(e.code));
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
@@ -51,15 +54,18 @@ class AppCubit extends Cubit<Appstate> {
 
  bool? sucess ;
   Future<bool> firebaseSignUp(String email , String password) async{
+    emit(rejsterloadingState());
     try {
       final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       if(credential.user != null){
+        emit(rejstersucessState());
        return sucess = true ;
       }
     } on FirebaseAuthException catch (e) {
+      emit(rejstererrorState(e.code));
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {

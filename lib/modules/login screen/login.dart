@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled/Shared/Network/local/Cache%20helper.dart';
@@ -57,22 +58,27 @@ class login extends StatelessWidget {
                           },
                           decoration: InputDecoration(label: Text('password')),),
                         SizedBox(height: 20,),
-                        ElevatedButton(
-                            style: ButtonStyle(elevation: MaterialStatePropertyAll(10),
-                                fixedSize: MaterialStatePropertyAll(Size(double.maxFinite, 50))
-                            ),
-                            onPressed: (){
-                              if(formkey.currentState!.validate()){
-                                cubit.FirebaseSignin(email.text, pass.text);
-                                if(cubit.auth == true){
-                                  Cachhelper.putStting(key: 'email', value: email.text);
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => next(),));
-                                }else{
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Sign in faild'),));
+                        ConditionalBuilder(
+                          condition: state is! loginloadingState,
+                          builder: (BuildContext context) => ElevatedButton(
+                              style: ButtonStyle(elevation: MaterialStatePropertyAll(10),
+                                  fixedSize: MaterialStatePropertyAll(Size(double.maxFinite, 50))
+                              ),
+                              onPressed: (){
+                                if(formkey.currentState!.validate()){
+                                  cubit.FirebaseSignin(email.text, pass.text);
+                                  if(cubit.auth == true){
+                                    Cachhelper.putStting(key: 'email', value: email.text);
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => next(),));
+                                  }else{
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('Sign in faild'),));
+                                  }
                                 }
-                              }
-                            }, child: Text('Log in')),
+                              }, child: Text('Log in')),
+                          fallback: (BuildContext context) => Center(child: CircularProgressIndicator()),
+
+                        ),
                         SizedBox(height: 40,),
                         Row(
                           children: [

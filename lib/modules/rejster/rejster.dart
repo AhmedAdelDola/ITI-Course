@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled/modules/login%20screen/login.dart';
@@ -66,20 +67,25 @@ class signUp extends StatelessWidget {
                           },
                           decoration: InputDecoration(label: Text('password')),),
                         SizedBox(height: 20,),
-                        ElevatedButton(
-                            style: ButtonStyle(elevation: MaterialStatePropertyAll(10),
-                                fixedSize: MaterialStatePropertyAll(Size(double.maxFinite, 50))
-                            ),
-                            onPressed: (){
-                              if(formkey.currentState!.validate()){
-                                cubit.firebaseSignUp(email.text, pass.text);
-                                if(cubit.sucess == true){
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => login(),));
-                                }else{
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Sign Up faild'),));
-                              }
-                            }}, child: Text('Sign Up')),
+                        ConditionalBuilder(
+                          condition: state is! rejsterloadingState,
+                          builder: (BuildContext context) =>  ElevatedButton(
+                              style: ButtonStyle(elevation: MaterialStatePropertyAll(10),
+                                  fixedSize: MaterialStatePropertyAll(Size(double.maxFinite, 50))
+                              ),
+                              onPressed: (){
+                                if(formkey.currentState!.validate()){
+                                  cubit.firebaseSignUp(email.text, pass.text);
+                                  if(cubit.sucess == true){
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => login(),));
+                                  }else{
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('Sign Up faild'),));
+                                  }
+                                }}, child: Text('Sign Up')),
+                          fallback: (BuildContext context) => Center(child: CircularProgressIndicator()),
+                        ),
+
                       ],
                     ),
                   ),

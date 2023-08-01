@@ -6,3 +6,15 @@ class errorState extends Appstate {
    final String e ;
   errorState(this.e);
 }
+class loginloadingState extends Appstate {}
+class loginsucessState extends Appstate {}
+class loginerrorState extends Appstate {
+  final String e ;
+  loginerrorState(this.e);
+}
+class rejsterloadingState extends Appstate {}
+class rejstersucessState extends Appstate {}
+class rejstererrorState extends Appstate {
+  final String e ;
+  rejstererrorState(this.e);
+}
