@@ -62,7 +62,7 @@ class AppCubit extends Cubit<Appstate> {
       );
       if(credential.user != null){
         emit(rejstersucessState());
-       return sucess = true ;
+       return sucess = false ;
       }
     } on FirebaseAuthException catch (e) {
       emit(rejstererrorState(e.code));
@@ -74,7 +74,7 @@ class AppCubit extends Cubit<Appstate> {
     } catch (e) {
       print(e);
     }
-    return sucess = false ;
+    return sucess = true ;
   }
 
 
