@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,6 +77,21 @@ class AppCubit extends Cubit<Appstate> {
     }
     return sucess = true ;
   }
-
+  CollectionReference susers = FirebaseFirestore.instance.collection('users');
+  Future<void> addUser(String Name , String phone) {
+    emit( getloadingState());
+    return susers
+        .add({
+      'name': Name, // John Doe
+      'phone': phone, // Stokes and Sons
+    })
+        .then((value) {
+          emit(getsucessState());
+      print("User Added");
+    }).catchError((error) {
+      emit(geterrorState(error.toString()));
+      print("Failed to add user: $error");
+    });
+  }
 
 }

@@ -18,3 +18,9 @@ class rejstererrorState extends Appstate {
   final String e ;
   rejstererrorState(this.e);
 }
+class getloadingState extends Appstate {}
+class  getsucessState extends Appstate {}
+class  geterrorState extends Appstate {
+  final String e ;
+  geterrorState(this.e);
+}
